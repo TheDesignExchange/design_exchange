@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @design_method.name %>
+</p>
+
+<p>
+  <b>Overview:</b>
+  <%= @design_method.overview %>
+</p>
+
+<p>
+  <b>Process:</b>
+  <%= @design_method.process %>
+</p>
+
+<p>
+  <b>Principle:</b>
+  <%= @design_method.principle %>
+</p>
+
+<p>
+  <b>Citation:</b>
+  <%= @design_method.citation_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_design_method_path(@design_method) %> |
+<%= link_to 'Back', design_methods_path %>
