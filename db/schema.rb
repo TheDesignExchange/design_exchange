@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819021258) do
+ActiveRecord::Schema.define(:version => 20131003211409) do
 
   create_table "categorizations", :force => true do |t|
     t.integer  "design_method_id"
@@ -23,6 +23,12 @@ ActiveRecord::Schema.define(:version => 20130819021258) do
   add_index "categorizations", ["design_method_id", "method_category_id"], :name => "cat_index", :unique => true
   add_index "categorizations", ["design_method_id"], :name => "index_categorizations_on_design_method_id"
   add_index "categorizations", ["method_category_id"], :name => "index_categorizations_on_method_category_id"
+
+  create_table "citations", :force => true do |t|
+    t.string   "text"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "design_methods", :force => true do |t|
     t.string   "name"
@@ -38,5 +44,16 @@ ActiveRecord::Schema.define(:version => 20130819021258) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "method_citations", :force => true do |t|
+    t.integer  "design_method_id"
+    t.integer  "citation_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "method_citations", ["citation_id"], :name => "index_method_citations_on_citation_id"
+  add_index "method_citations", ["design_method_id", "citation_id"], :name => "index_method_citations_on_design_method_id_and_citation_id", :unique => true
+  add_index "method_citations", ["design_method_id"], :name => "index_method_citations_on_design_method_id"
 
 end

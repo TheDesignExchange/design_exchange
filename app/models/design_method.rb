@@ -23,6 +23,6 @@ class DesignMethod < ActiveRecord::Base
 
   has_many :categorizations, dependent: :destroy
   has_many :method_categories, through: :categorizations
-  has_many :citations, dependent: :destroy
-  has_many :method_citations, through: :method_citations
+  has_many :method_citations, dependent: :destroy
+  has_many :citations, through: :method_citations
 end

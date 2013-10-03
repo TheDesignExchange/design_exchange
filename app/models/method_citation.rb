@@ -1,6 +1,6 @@
 class MethodCitation < ActiveRecord::Base
-  attr_accessible :text
+  attr_accessible :citation_id, :design_method_id
 
-  has_many :citations, dependent: :destroy
-  has_many :design_methods, through: :citations
+  belongs_to :design_method
+  belongs_to :citation
 end
