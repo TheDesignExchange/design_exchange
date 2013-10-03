@@ -24,22 +24,13 @@ ActiveRecord::Schema.define(:version => 20130819021258) do
   add_index "categorizations", ["design_method_id"], :name => "index_categorizations_on_design_method_id"
   add_index "categorizations", ["method_category_id"], :name => "index_categorizations_on_method_category_id"
 
-  create_table "citations", :force => true do |t|
-    t.string   "title"
-    t.string   "link"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "design_methods", :force => true do |t|
     t.string   "name"
     t.text     "overview"
     t.text     "process"
     t.text     "principle"
-    t.integer  "citation_id"
-    t.integer  "method_category_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "method_categories", :force => true do |t|

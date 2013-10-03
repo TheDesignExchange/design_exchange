@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+# ruby '1.9.3'
 
 gem 'rails', '3.2.12'
 
@@ -12,12 +12,14 @@ gem 'sunspot_rails'
 gem 'will_paginate'
 gem 'bootstrap-sass', '2.1'
 gem 'therubyracer'
+gem 'annotate'
 
 group :development do
   gem 'thin'
   gem 'quiet_assets'
   gem 'sunspot_solr'
   gem 'spreadsheet'
+  gem 'sqlite3'
 end
 
 
