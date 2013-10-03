@@ -8,4 +8,7 @@
 <b>Categories</b>
 <%= design_method.method_categories.map do |category| %>
   <% link_to category.name, category %>
+<b>Citations</b>
+<%= design_method.method_citations.map do |citation| %>
+  <% link_to citation.text, citation %>
 <% end.to_sentence %>
