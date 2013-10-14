@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131003211409) do
+ActiveRecord::Schema.define(:version => 20131003225343) do
 
   create_table "categorizations", :force => true do |t|
     t.integer  "design_method_id"
@@ -55,5 +55,27 @@ ActiveRecord::Schema.define(:version => 20131003211409) do
   add_index "method_citations", ["citation_id"], :name => "index_method_citations_on_citation_id"
   add_index "method_citations", ["design_method_id", "citation_id"], :name => "index_method_citations_on_design_method_id_and_citation_id", :unique => true
   add_index "method_citations", ["design_method_id"], :name => "index_method_citations_on_design_method_id"
+
+  create_table "user_sessions", :force => true do |t|
+    t.string   "user_session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "user_sessions", ["updated_at"], :name => "index_user_sessions_on_updated_at"
+  add_index "user_sessions", ["user_session_id"], :name => "index_user_sessions_on_user_session_id"
+
+  create_table "users", :force => true do |t|
+    t.string   "login",             :null => false
+    t.string   "crypted_password",  :null => false
+    t.string   "password_salt",     :null => false
+    t.string   "persistence_token", :null => false
+    t.string   "name"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
 
 end

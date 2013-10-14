@@ -13,6 +13,7 @@ gem 'will_paginate'
 gem 'bootstrap-sass', '2.1'
 gem 'therubyracer'
 gem 'annotate'
+gem 'authlogic'
 
 group :development do
   gem 'thin'

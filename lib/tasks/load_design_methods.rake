@@ -23,6 +23,7 @@ namespace :methods do
       fields[:overview]  = row[1].to_s.strip
       fields[:process]   = row[2].to_s.strip
       fields[:principle] = row[3].to_s.strip
+      # FILL: load citations from spreadsheet
 
       design_method = DesignMethod.new(fields)
 
@@ -31,11 +32,13 @@ namespace :methods do
       else
         p design_method
       end
+      
+      # Read in categories
 
       string = row[5]
 
       if string and !string.include?('http') and !string.include?('pg')
-        row[5].downcase.split(/[\n,]/).each do |cat|
+        row[5].downcase.split(/[\n,]/).each do |cat|  # split by new line character
           if !cat.blank?
             cat = cat.strip
             keys.each do |key, title|
@@ -47,9 +50,19 @@ namespace :methods do
           end
         end
       end
-
+      
+      # citation = row[4]
+      # # not working: somehow the thing being updated in DB is method citations
+      # # and not citations. 
+      # if citation #hard to determine what to filter or not.
+      #   citation.split(/[\n\*]/).each do |cit|
+      #     if !cit.blank?
+      #       design_method.citations << Citation.where(text: cit).first_or_create!
+      #       p "#{design_method.name}: #{design_method.citations.map {|c| c.text}}"
+      #     end
+      #   end
+      # end
     end
-
   end
 
   namespace :categories do
