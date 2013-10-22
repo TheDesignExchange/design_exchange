@@ -19,10 +19,10 @@ namespace :methods do
     categories = Hash.new
 
     data.each do |row|
-      fields[:name]      = row[0].to_s.strip
-      fields[:overview]  = row[1].to_s.strip
-      fields[:process]   = row[2].to_s.strip
-      fields[:principle] = row[3].to_s.strip
+      fields[:name]      = row[1].to_s.strip
+      fields[:overview]  = row[2].to_s.strip
+      fields[:process]   = row[3].to_s.strip
+      fields[:principle] = row[4].to_s.strip
       # FILL: load citations from spreadsheet
 
       design_method = DesignMethod.new(fields)
