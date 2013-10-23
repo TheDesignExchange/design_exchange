@@ -9,6 +9,9 @@
 #
 
 class MethodCategory < ActiveRecord::Base
+  validates :name, presence: true, length: { maximum: 255,
+            too_long: "%{count} is the maximum character length."}
+
   attr_accessible :name
 
   has_many :categorizations, dependent: :destroy
