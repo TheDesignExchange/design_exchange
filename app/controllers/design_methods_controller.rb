@@ -49,8 +49,8 @@ class DesignMethodsController < ApplicationController
     @design_method = DesignMethod.find(params[:id])
   end
 
-  # POST /design_methods
-  # POST /design_methods.json
+
+  # Creates a DesignMethod.
   def create
     @design_method = DesignMethod.new(params[:design_method])
 

@@ -32,10 +32,10 @@ namespace :methods do
       else
         p design_method
       end
-      
+
       # Read in categories
 
-      string = row[5]
+      string = row[6]
 
       if string and !string.include?('http') and !string.include?('pg')
         row[5].downcase.split(/[\n,]/).each do |cat|  # split by new line character
@@ -50,10 +50,10 @@ namespace :methods do
           end
         end
       end
-      
+
       # citation = row[4]
       # # not working: somehow the thing being updated in DB is method citations
-      # # and not citations. 
+      # # and not citations.
       # if citation #hard to determine what to filter or not.
       #   citation.split(/[\n\*]/).each do |cit|
       #     if !cit.blank?

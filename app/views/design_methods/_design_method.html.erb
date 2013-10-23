@@ -1,15 +1,4 @@
-<h1><%= design_method.name %></h1>
-<b>Overview</b>
-<p><%= design_method.overview %></p>
-<b>Procedure</b>
-<p><%= design_method.process %></p>
-<b>Principle</b>
-<p><%= design_method.principle %></p>
-<b>Categories</b>
-<% design_method.method_categories.map do |category| %>
-  <%= link_to category.name, category %>
-<% end %>
-<p><b>Citations</b><p>
-<% design_method.citations.map do |citation| %>
-  <%= link_to citation.text, citation %>
-<% end.to_sentence %>
+<li class="method">
+  <h3><%= link_to design_method.name, design_method %></h3>
+  <p class="method-overview"><%= simple_format design_method.overview %></p>
+</li>
