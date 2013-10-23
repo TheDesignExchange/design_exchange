@@ -22,7 +22,9 @@
 
 <p>
   <b>Citation:</b>
-  <%= @design_method.citation_id %>
+  <% @design_method.citations.map do |citation| %>
+    <%= link_to citation.text, citation %>
+  <% end.to_sentence %>
 </p>
 
 
