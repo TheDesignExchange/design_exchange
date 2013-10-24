@@ -13,6 +13,11 @@
 </header>
 
 <div class="content">
+  <ul>
+    <% flash.each do |type, message| %>
+      <li class="flash flash-<%= type %>"><%= message %></li>
+    <% end %>
+  </ul>
   <%= yield %>
 </div>
 

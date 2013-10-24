@@ -26,8 +26,6 @@ class DesignMethod < ActiveRecord::Base
     end
   end
 
-  attr_accessible :name, :overview, :principle, :process
-
   has_many :categorizations, dependent: :destroy
   has_many :method_categories, through: :categorizations
   has_many :method_citations, dependent: :destroy

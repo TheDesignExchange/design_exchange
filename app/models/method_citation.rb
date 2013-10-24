@@ -13,8 +13,6 @@ class MethodCitation < ActiveRecord::Base
   validates :design_method_id, :citation_id, 
             presence: true, numericality: { only_integer: true }
 
-  attr_accessible :citation_id, :design_method_id
-
   belongs_to :design_method
   belongs_to :citation
 end

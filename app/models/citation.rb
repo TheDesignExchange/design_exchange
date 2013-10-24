@@ -12,8 +12,6 @@ class Citation < ActiveRecord::Base
   validates :text, presence: true, length: { maximum: 255,
             too_long: "%{count} characters is the maximum citation length." }
 
-  attr_accessible :text
-
   has_many :method_citations, dependent: :destroy
   has_many :design_methods, through: :method_citations
 end

@@ -28,7 +28,7 @@ namespace :methods do
       design_method = DesignMethod.new(fields)
 
       if !design_method.save
-        p "Error while creating a design method"
+        p "Error while creating a design method: #{design_method.errors.full_messages}"
       else
         p design_method
       end
@@ -38,12 +38,15 @@ namespace :methods do
       string = row[6]
 
       if string and !string.include?('http') and !string.include?('pg')
-        row[5].downcase.split(/[\n,]/).each do |cat|  # split by new line character
+        string.downcase.split(/[\n,]/).each do |cat|  # split by new line character
           if !cat.blank?
             cat = cat.strip
             keys.each do |key, title|
               if cat.include?(key.to_s)
-                design_method.method_categories << MethodCategory.where(name: title).first_or_create!
+                category = MethodCategory.where(name: title).first_or_create!
+                if !design_method.method_categories.include?(category)
+                  design_method.method_categories << category
+                end
                 p "#{design_method.name}: #{design_method.method_categories.map {|c| c.name}}"
               end
             end
