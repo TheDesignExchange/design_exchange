@@ -9,12 +9,12 @@ gem 'devise'
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
+gem 'spreadsheet'
+gem 'sunspot_solr'
 
 group :development do
   gem 'thin'
   gem 'quiet_assets'
-  gem 'sunspot_solr'
-  gem 'spreadsheet'
   gem 'sqlite3'
 end
 
