@@ -53,6 +53,9 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.8.1)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -114,6 +117,10 @@ GEM
       nokogiri
       sunspot (= 2.0.0)
     sunspot_solr (2.0.0)
+    sunspot_with_kaminari (0.2.0)
+      kaminari (>= 0.14.0)
+      sunspot
+      sunspot_rails
     thin (1.6.0)
       daemons (>= 1.0.9)
       eventmachine (>= 1.0.0)
@@ -145,6 +152,7 @@ DEPENDENCIES
   coffee-rails
   devise
   jquery-rails
+  kaminari
   pg
   quiet_assets
   rails (~> 4.0.0)
@@ -153,6 +161,7 @@ DEPENDENCIES
   sqlite3
   sunspot_rails
   sunspot_solr
+  sunspot_with_kaminari
   thin
   uglifier
   unicorn
