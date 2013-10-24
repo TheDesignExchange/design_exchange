@@ -68,9 +68,4 @@ DesignExchange::Application.configure do
   # Eager load
   config.eager_load = false
 
-  config.after_initialize do
-    require "websolr-sunspot_rails"
-    Sunspot.config.solr.url = ENV["WEBSOLR_URL"]
-  end
-
 end
