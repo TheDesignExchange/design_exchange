@@ -1,23 +1,19 @@
-<p id="notice"><%= notice %></p>
+<h2><%= @design_method.name %></h2>
 
 <p>
-  <b>Name:</b>
-  <%= @design_method.name %>
+  <b>Overview:</b> <%= @design_method.overview %>
 </p>
 
 <p>
-  <b>Overview:</b>
-  <%= @design_method.overview %>
+  <b>Process:</b> <%= @design_method.process %>
 </p>
 
 <p>
-  <b>Process:</b>
-  <%= @design_method.process %>
+  <b>Principle:</b> <%= @design_method.principle %>
 </p>
 
 <p>
-  <b>Principle:</b>
-  <%= @design_method.principle %>
+  <b>Categories:</b> <%= render @categories %>
 </p>
 
 <%= link_to 'Edit', edit_design_method_path(@design_method) %> |

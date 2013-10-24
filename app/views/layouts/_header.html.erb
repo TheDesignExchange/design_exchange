@@ -4,8 +4,20 @@
     <%= text_field_tag :query, nil, class: "search_bar", placeholder: "Search for design methods" %>
   <% end %>
   <ul>
-    <li>
-      <%= link_to "User", root_url %>
-    </li>
+    <% if current_user %>
+      <li>
+        <%= link_to 'New Design Method', new_design_method_path %>
+      </li>
+      <li>
+        <%= link_to current_user.email, current_user %>
+      </li>
+      <li>
+        <%= link_to "Sign Out", destroy_user_session_url, method: "delete" %>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to "Sign in", new_user_session_url %>
+      </li>
+    <% end %>
   </ul>
 </div>

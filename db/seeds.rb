@@ -1,10 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+# Reset users
+
+User.destroy_all
+
+# Create default admin user
+
+admin = User.create!(
+  email: "admin@thedesignexchange.org",
+  password: "thedesignexchange",
+  password_confirmation: "thedesignexchange",
+)
+
+# Read in design methods from the spreadsheet
 
 filename = File.join(Rails.root, 'lib/tasks/data/design_methods.xls')
 fields = Hash.new
@@ -31,11 +37,15 @@ data.each do |row|
   # FILL: load citations from spreadsheet
 
   design_method = DesignMethod.new(fields)
+  design_method.owner = admin
 
   if !design_method.save
-    p "Error while creating a design method: #{design_method.errors.full_messages}"
+    p "Error while creating a design method: "
+    design_method.errors.full_messages.each do |message|
+      p "\t#{message}"
+    end
   else
-    p design_method
+    p "Added #{design_method.name}"
   end
 
   # Read in categories

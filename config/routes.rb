@@ -3,11 +3,14 @@ DesignExchange::Application.routes.draw do
 
   root to: "main_pages#home"
 
-  get "main_pages/about"
+  get :about, to: "main_pages#about"
 
-  get "main_pages/contact"
+  get :contact, to: "main_pages#contact"
 
   resources :design_methods
   resources :method_categories, only: [:show]
+  resources :users do
+    resources :design_methods, only: [:index]
+  end
   get 'search/(:query)', controller: 'design_methods', action: 'search', as: 'search'
 end

@@ -7,7 +7,7 @@ class CreateMethodCitations < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :method_citations, [:design_method_id, :citation_id], unique: true, as: "unique_citations"
+    add_index :method_citations, [:design_method_id, :citation_id], unique: true
     add_index :method_citations, :design_method_id
     add_index :method_citations, :citation_id
   end

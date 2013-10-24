@@ -4,5 +4,5 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  # Setup accessible (or protected) attributes for your model
+  has_many :owned_methods, dependent: :destroy, class_name: "DesignMethod", foreign_key: :owner_id
 end

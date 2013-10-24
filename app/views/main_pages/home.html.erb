@@ -1,2 +1,13 @@
-<h1>MainPages#home</h1>
-<p>Find me in app/views/main_pages/home.html.erb</p>
+<% if current_user %>
+  <h1>Welcome, <%= current_user.email %></h1>
+  <h2>Recently Created Methods</h2>
+  <ul>
+    <%= render @recently_created_methods %>
+  </ul>
+<% else %>
+  <div class="home">
+    <h1 class="huge">Welcome to The Design Exchange</h1>
+    <h2 class="inline"><%= link_to "Log In", new_user_session_url %></h2>
+    <h2 class="inline"><%= link_to "Sign Up", new_user_registration_url %></h2>
+  </div>
+<% end %>

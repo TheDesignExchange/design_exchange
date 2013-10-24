@@ -11,6 +11,9 @@ class MainPagesController < ApplicationController
   # If logged in, should show activity feed (to be developed), any update information (to be
   # determined), and navigation for basic tasks.
   def home
+    if current_user
+      @recently_created_methods = current_user.owned_methods.order("created_at DESC").limit(10)
+    end
   end
 
   # Show information about the project itself
