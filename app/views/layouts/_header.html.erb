@@ -9,12 +9,18 @@
         <%= link_to 'New Design Method', new_design_method_path %>
       </li>
       <li>
-        <%= link_to current_user.email, current_user %>
+        <%= link_to 'All Methods', design_methods_path %>
+      </li>
+      <li>
+        <%= link_to 'Dashboard', current_user %>
       </li>
       <li>
         <%= link_to "Sign Out", destroy_user_session_url, method: "delete" %>
       </li>
     <% else %>
+      <li>
+        <%= link_to 'All Methods', design_methods_path %>
+      </li>
       <li>
         <%= link_to "Sign in", new_user_session_url %>
       </li>

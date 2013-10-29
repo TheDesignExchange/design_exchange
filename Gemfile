@@ -19,8 +19,8 @@ group :development do
 end
 
 group :production do
-  gem 'pg'
   gem 'unicorn'
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'

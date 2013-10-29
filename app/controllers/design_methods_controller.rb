@@ -12,11 +12,11 @@ class DesignMethodsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find(params[:id])
+      @design_methods = @user.owned_methods.paginate(page: params[:page])
     else
       @user = current_user
+      @design_methods = DesignMethod.all.paginate(page: params[:page])
     end
-
-    @design_methods = @user.owned_methods.paginate(page: params[:page])
   end
 
   # Search design methods.
@@ -35,6 +35,25 @@ class DesignMethodsController < ApplicationController
       @results = search.results
     else
       @results = []
+    end
+  end
+
+  # Provide design methods for autocomplete.
+  #
+  # === Parameters
+  # - term: the search term
+  #
+  # === Variables
+  # - @design_methods: all the design methods matching the term
+  # - @design_hash: correctly formatted json for jquery.
+  def autocomplete
+    @design_methods = DesignMethod.where(['name LIKE ?', "#{params[:term]}%"])
+    @design_hash = []
+    @design_methods.each do |d|
+      @design_hash << { label: d.name }
+    end
+    respond_to do |format|
+      format.json { render json: @design_hash}
     end
   end
 

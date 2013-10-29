@@ -13,4 +13,5 @@ DesignExchange::Application.routes.draw do
     resources :design_methods, only: [:index]
   end
   get 'search/(:query)', controller: 'design_methods', action: 'search', as: 'search'
+  get 'autocomplete/(:term)', controller: 'design_methods', action: 'autocomplete', as: 'autocomplete'
 end

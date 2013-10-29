@@ -12,7 +12,7 @@
 #
 
 class DesignMethod < ActiveRecord::Base
-  validates :name, :overview, :principle, :process, presence: true
+  validates :name, :overview, presence: true
   validates :name, length: { maximum: 255,
             too_long: "%{count} is the maximum character length."}
   validates :name, uniqueness: { case_sensitive: false,

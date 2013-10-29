@@ -1,5 +1,8 @@
-<h1 class="inline">Design Methods by <%= @user.email %></h1>
-
+<% if current_user %>
+	<h1 class="inline">Design Methods by <%= @user.email %></h1>
+<% else %>
+	<h1 class="inline">Design Methods</h1>
+<% end %>
 <ul>
   <%= render @design_methods %>
 </ul>
