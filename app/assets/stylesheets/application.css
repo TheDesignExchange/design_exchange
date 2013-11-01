@@ -97,6 +97,7 @@ header form {
   overflow: auto;
   color: #333;
   padding-bottom: 10px;
+  min-height: 600px;
 }
 
 /* Flash */
@@ -111,7 +112,6 @@ header form {
 
 /* Footer */
 footer {
-  position: fixed;
   width: 100%;
   margin: 0;
   text-align: center;
@@ -154,7 +154,6 @@ footer ul {
 body {
   margin: 0;
   font-size: 15px;
-  padding-bottom: 100px;
 }
 
 ul {

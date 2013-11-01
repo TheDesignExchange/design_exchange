@@ -16,7 +16,7 @@ class DesignMethod < ActiveRecord::Base
   validates :name, length: { maximum: 255,
             too_long: "%{count} is the maximum character length."}
   validates :name, uniqueness: { case_sensitive: false,
-            message: "A method with that name already exists. Try editing an existing one."},
+            message: "already exists. Try editing an existing one."},
             on: :create
 
   searchable do

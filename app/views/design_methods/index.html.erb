@@ -1,9 +1,6 @@
-<% if current_user %>
-	<h1 class="inline">Design Methods by <%= @user.email %></h1>
-<% else %>
-	<h1 class="inline">Design Methods</h1>
-<% end %>
+<h1>Design Methods</h1>
 <ul>
   <%= render @design_methods %>
 </ul>
 <%= will_paginate @design_methods %>
+

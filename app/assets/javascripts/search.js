@@ -1,5 +1,4 @@
 $(function() {
-  var availableTags = $.getJSON("design_methods/autocomplete")
   function split( val ) {
   return val.split( /,\s*/ );
   }
@@ -17,7 +16,7 @@ $(function() {
     })
     .autocomplete({
       source: function( request, response ) {
-        $.getJSON( "/autocomplete", {
+        $.getJSON( "design_methods/autocomplete", {
                  term: extractLast( request.term )}, response );
       },
       focus: function() {
