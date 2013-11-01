@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+ *= require jquery.ui.autocomplete
  *= require_tree .
  */
 
@@ -35,9 +36,13 @@ header ul {
 
 header li, .logo {
   display: inline-block;
-
   padding: 10px 20px 10px 20px;
   line-height: 1em;
+}
+
+header li:hover {
+  background-color: #FFF;
+  color: #333;
 }
 
 header li a, .logo {
@@ -70,6 +75,12 @@ header form {
   outline: 1px solid #EEE;
 }
 
+.ui-autocomplete {
+  max-height: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .logo {
   float: left;
   border-left: none;
@@ -84,8 +95,9 @@ header form {
   margin-left: auto;
   margin-right: auto;
   overflow: auto;
-
   color: #333;
+  padding-bottom: 10px;
+  min-height: 600px;
 }
 
 /* Flash */
@@ -98,12 +110,50 @@ header form {
   margin: 0 0 10px 0;
 }
 
+/* Footer */
+footer {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  border-top: solid;
+  background-color: #FFF;
+  overflow: auto;
+  color: #333;
+  bottom: 0px;
+}
+
+.inner {
+  width: 958px;
+  margin: auto;
+  overflow: auto;
+}
+footer li {
+  display: inline-block;
+  padding: 10px 20px 10px 20px;
+  line-height: 1em;
+}
+
+footer li:hover {
+  background-color: #333;
+  color: #FFF;
+}
+
+footer li a {
+  text-decoration: none;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+footer ul {
+  float: left;
+}
+
 /* General/Resets */
 
 body {
   margin: 0;
   font-size: 15px;
-  padding-bottom: 100px;
 }
 
 ul {
@@ -114,4 +164,13 @@ ul {
 
 a {
   color: inherit
+}
+
+.field {
+  padding-top: 20px;
+}
+
+textarea {
+  min-height: 200px;
+  min-width: 500px;
 }
