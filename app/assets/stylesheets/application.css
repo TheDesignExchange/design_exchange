@@ -174,3 +174,7 @@ textarea {
   min-height: 200px;
   min-width: 500px;
 }
+
+span {
+  padding-left: 10px;
+}
