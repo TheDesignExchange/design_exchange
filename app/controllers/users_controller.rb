@@ -8,5 +8,6 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @owned_methods = @user.owned_methods.limit(10)
+    store_location
   end
 end

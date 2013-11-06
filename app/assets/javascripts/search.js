@@ -16,7 +16,7 @@ $(function() {
     })
     .autocomplete({
       source: function( request, response ) {
-        $.getJSON( "design_methods/autocomplete", {
+        $.getJSON( "/design_methods/autocomplete", {
                  term: extractLast( request.term )}, response );
       },
       focus: function() {

@@ -17,6 +17,7 @@ class DesignMethodsController < ApplicationController
       @user = current_user
       @design_methods = DesignMethod.all.paginate(page: params[:page])
     end
+    store_location
   end
 
   # Search design methods.
@@ -31,7 +32,7 @@ class DesignMethodsController < ApplicationController
       search = DesignMethod.search do
         fulltext params[:query]
       end
-
+      store_location
       @results = search.results
     else
       @results = []
@@ -68,6 +69,7 @@ class DesignMethodsController < ApplicationController
   def show
     @design_method = DesignMethod.find(params[:id])
     @categories = @design_method.method_categories
+    @back = redirect_back
 
     respond_to do |format|
       format.html # show.html.erb
@@ -158,6 +160,16 @@ class DesignMethodsController < ApplicationController
       params.require(:design_method).permit(
         :name, :overview, :process, :principle
       )
+    end
+
+    def redirect_back
+      if session[:return_to]
+        back = session[:return_to]
+        session.delete(:return_to)
+        back
+      else
+        design_methods_url
+      end
     end
 
   # end private
