@@ -170,11 +170,42 @@ a {
   padding-top: 20px;
 }
 
-textarea {
-  min-height: 200px;
-  min-width: 500px;
-}
-
 span {
   padding-left: 10px;
 }
+
+input {
+  padding: 5px 20px 5px 5px;
+}
+
+input[type=submit] {
+  margin-top: 20px;
+}
+
+form.new_design_method {
+  padding-bottom: 20px;
+}
+
+/* Expanding Textarea */
+
+textarea {  
+    width: 80%;  
+    min-height: 100px;   
+    color: #444;  
+    padding: 5px;
+    resize: none;
+}  
+  
+.noscroll {  
+    overflow: hidden;  
+}
+
+.hiddendiv {  
+    display: none;  
+    white-space: pre-wrap;  
+    width: 80%;  
+    min-height: 100px;  
+    padding: 5px;  
+    word-wrap: break-word;
+    resize: none;
+}  

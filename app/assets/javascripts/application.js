@@ -15,4 +15,5 @@
 //= require jquery.ui.autocomplete
 //= require search
 //= require validate
+//= require expander
 //= require_tree .
