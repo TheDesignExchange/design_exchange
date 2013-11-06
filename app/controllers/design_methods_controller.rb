@@ -28,14 +28,16 @@ class DesignMethodsController < ApplicationController
   # === Variables
   # - @results: list of design methods from the search result
   def search
+    @hits = []
+
     if params[:query]
       search = DesignMethod.search do
-        fulltext params[:query]
+        fulltext params[:query] do
+          highlight
+        end
       end
       store_location
-      @results = search.results
-    else
-      @results = []
+      @hits = search.hits
     end
   end
 
