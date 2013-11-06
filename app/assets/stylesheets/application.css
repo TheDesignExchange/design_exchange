@@ -62,7 +62,6 @@ header form {
 
 .search_bar {
   display: inline-block;
-  line-height: 1em;
   border: none;
   background-color: #777;
   color: #EEE;

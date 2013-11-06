@@ -20,7 +20,10 @@ class DesignMethod < ActiveRecord::Base
             on: :create
 
   searchable do
-    text :name, :overview, :principle, :process
+    text :name, stored: true
+    text :overview, stored: true
+    text :principle, stored: true
+    text :process, stored: true
     text :method_categories do
       method_categories.map { |method_category| method_category.name }
     end
