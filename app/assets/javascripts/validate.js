@@ -1,18 +1,23 @@
 // Validates new design method form.
 $(function() {
-  var valid = true;
+  var errors = new Array();
   $("#new_design_method").submit(function( event ) {
     if ($("#design_method_name").val() == "") {
-      $("span#name").text("Please name your method.").show();
-      valid = false;
+      errors.push("Please name your method");
     }
     if ($("#design_method_overview").val() == "") {
-      $("span#overview").text("Your method must have an overview.").show();
-      valid = false;
+      errors.push("Method must have an overview")
     }
-    if (!valid) {
+    if (errors.length != 0) {
+      for (i = 0; i < errors.length; i += 1) {
+        var name = errors[i].match(/(name|overview)/);
+        var span = "span#";
+        span = span.concat(name);
+        $(span).text(errors[i]).show();
+      }
       alert("Mandatory fields were left empty.");
       event.preventDefault();
+      errors = new Array();
     }
   })
 });
