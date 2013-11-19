@@ -151,7 +151,7 @@ class DesignMethodsController < ApplicationController
     @design_method.destroy
 
     respond_to do |format|
-      format.html { redirect_to design_methods_url }
+      format.html { redirect_to redirect_back }
       format.json { head :no_content }
     end
   end

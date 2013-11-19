@@ -126,6 +126,7 @@ footer {
   margin: auto;
   overflow: auto;
 }
+
 footer li {
   display: inline-block;
   padding: 10px 20px 10px 20px;
@@ -198,24 +199,24 @@ form.new_design_method {
 }
 /* Expanding Textarea */
 
-textarea {  
-    width: 80%;  
-    min-height: 100px;   
-    color: #444;  
+textarea {
+    width: 80%;
+    min-height: 100px;
+    color: #444;
     padding: 5px;
     resize: none;
-}  
-  
-.noscroll {  
-    overflow: hidden;  
 }
 
-.hiddendiv {  
-    display: none;  
-    white-space: pre-wrap;  
-    width: 80%;  
-    min-height: 100px;  
-    padding: 5px;  
+.noscroll {
+    overflow: hidden;
+}
+
+.hiddendiv {
+    display: none;
+    white-space: pre-wrap;
+    width: 80%;
+    min-height: 100px;
+    padding: 5px;
     word-wrap: break-word;
     resize: none;
-}  
+}

@@ -13,6 +13,7 @@ class MainPagesController < ApplicationController
   def home
     if current_user
       @recently_created_methods = current_user.owned_methods.order("created_at DESC").limit(10)
+      store_location
     end
   end
 
