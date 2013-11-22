@@ -1,0 +1,190 @@
+
+<!DOCTYPE HTML>
+<html class="no-js">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+	<title>Design Exchange</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="css/normalize.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/grid.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script> 
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery.stellar.min.js"></script>
+	<script type="text/javascript" src="js/waypoints.min.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+</script>
+	<script type="text/javascript">
+		var csvdata = 'https://docs.google.com/spreadsheet/pub?key=0AjAwCuCEhsj_dHdiYW82LWJRR21mZU5aenRyRXVxa0E&output=csv';
+
+		$(function(){
+			
+			loadData('Publication');
+
+		});
+		function loadData(type){
+			$.get(csvdata, function(data){
+				var location = $('#publications');
+				var data = CSVToArray(data, ",");
+				mapping = data[0];
+				data = data.splice(1, data.length - 1);
+				console.log(data);
+				console.log(mapping);
+				for(var i in data)
+					addProject(location, mapping, data[i], parseInt(i) + 1);
+			});
+		}
+
+	
+		function getIndex(name, mapping){
+			return mapping.indexOf(name);
+		}
+		function addProject(location, mapping, data, num){
+// ["Title", "Domain", "URL", "Company Name", "ID", "PDF ID", "Problem", "Methods", "Contact Info1", "Contact Info2", "Responded?", "Clarity (1-5)", "Resources (1-5)"] 
+			var project = $('<div></div>').addClass('grid_6').css('border-bottom', '1px #333 solid');
+			// var preview = $('<div></div>').addClass('grid_3 alpha preview');
+			var info = $('<div></div>').addClass('grid_12 omega info');
+			
+			//fill thumbnail column
+			// var tI = getIndex('Thumbnail', mapping);
+			
+			// var thumbnail = $('<img/>').attr('src', data[tI]);
+			// preview.append(thumbnail);
+			
+			//fill info column
+			var linkify = ['Website', 'Project', 'Paper', 'Poster', 'Demo', 'Video'];
+			var vidify = ['Video']
+			var skip = ['Thumbnail', 'Type'];
+			for(var i in data){
+				var field = mapping[i];
+					// if($.inArray(field, skip) != -1)
+					// 	continue;
+				 	if(field == 'Methods')
+						info.append(' <span class="'+ field +'">'+ data[i] +' </span><br/>');
+					// else if(data[i] == "")
+					// 	continue;
+					else if(field == 'Title')
+						info.append('<span class="'+ field +'">'+ num + ". " +  data[i] +' </span>');
+					else if(field == 'Subtitle')
+						info.append('<span class="'+ 'URL' +'">'  +  data[i] +' </span>');
+
+					else if(field == "URL")
+					 	info.append('<span class="'+ field +'"><a href="'+ data[i] +'">' + data[i] + '</a></span>');
+					
+					else if(field == 'Problem')
+						info.append('<span class="'+ field +'">'+ data[i] +' </span><br>');
+					else if(field == "Company Name")
+					 	info.append('<span class="'+ 'cn' +'">('+ data[i] +')</span>');
+
+					// else if($.inArray(field, linkify) != -1){
+					// 	info.append('<span class="'+ field +'"><a href="'+ data[i] +'">' + field + '</a></span> | ');
+					// }
+					
+					// else
+					// 	info.append('<span class="'+ field +'">'+ data[i] +' .</span>');
+				}
+			
+
+			project.append(info);
+			location.append(project);
+			
+		}
+		
+	</script>
+
+</head>
+
+<body>
+
+	<div class="menu">
+		<div class="container clearfix">
+
+			<div id="logo" class="grid_3 omega">
+				<img src='images/de.png'/>
+			</div>
+
+			<div id="nav" class="grid_9 omega">
+				<ul class="navigation">
+					<!-- <li data-slide="1"> <a href='projects.html'>Case Studies</a></li> -->
+				</ul>
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="slide" id="navslide" data-slide="2" data-stellar-background-ratio="0.5">
+		<div class="container clearfix">
+			<h2> Case Studies</h2>
+			<div id="publications" class="grid_12">
+				
+			</div>
+		</div>
+	</div>
+	
+	<div id="copyright">
+		Copyright &copy; 2009-2013 Design Exchange
+	</div>
+
+
+
+	<style type="text/css">
+		span{
+			font-weight: bold;
+		}
+		.info span{
+			font-weight: normal;
+		}
+		.preview img{
+			width: 100%;
+		}
+		.info .URL{
+			width: 100%;
+			text-transform: lowercase;
+			font-weight: light;
+			font-style:italic;
+			font-size: 0.8em;
+			display: block;
+			
+		}
+		.URL a{
+			color: #333 !important;
+		}
+		.info .Methods{
+			text-transform: uppercase;
+			font-weight: bold;
+		}
+		.info .Authors{
+			width: 100%;
+			display: block;
+			margin-top: 15px;
+		}
+		.info .Title{
+			font-size: 1.2em;
+			font-weight: bold;
+		}
+		.info .Problem{
+			margin: 10px 0 0 0;
+			font-size: 0.9em;
+			display: block;
+			width: 100%;
+
+		}
+		.info span a:hover{
+			color: #CCC;
+		}
+		.info span a{
+			color: white;
+			font-size: 0.8em;
+			margin-bottom: 15px;
+			display: inline-block;
+			text-transform: uppercase;
+		}
+
+	</style>
+	<script type="text/javascript" src="js/csvread.js"></script>
+
+	
+</body>
+</html>

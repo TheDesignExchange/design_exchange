@@ -1,3 +1,4 @@
+
 # Reset users
 
 User.destroy_all
@@ -84,3 +85,4 @@ end
 
 header = DesignMethod.where(name: "Name").first
 header.destroy if header
+
