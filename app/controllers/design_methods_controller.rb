@@ -1,31 +1,77 @@
-class DesignMethodsController < ApplicationController
-  # GET /design_methods
-  # GET /design_methods.json
-  def index
-    @design_methods = DesignMethod.all
+# == Description
+# Controller for DesignMethod.
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @design_methods }
+class DesignMethodsController < ApplicationController
+  # Page for DesignMethod browsing.
+  #
+  # Currently displays all methods, but in the future should display different sets of methods such
+  # as most popular, recommended, featured, etc.
+  #
+  # === Variables
+  # - @design_methods: all design methods
+  def index
+    if params[:user_id]
+      @user = User.find(params[:id])
+      @design_methods = @user.owned_methods.paginate(page: params[:page])
+    else
+      @user = current_user
+      @design_methods = DesignMethod.all.paginate(page: params[:page])
     end
+    store_location
   end
 
+  # Search design methods.
+  #
+  # === Parameters
+  # - query: the search term
+  #
+  # === Variables
+  # - @results: list of design methods from the search result
   def search
+    @hits = []
+
     if params[:query]
       search = DesignMethod.search do
-        fulltext params[:query]
+        fulltext params[:query] do
+          highlight
+        end
       end
-
-      @results = search.results
-    else
-      @results = []
+      store_location
+      @hits = search.hits
     end
   end
 
-  # GET /design_methods/1
-  # GET /design_methods/1.json
+  # Provide design methods for autocomplete.
+  #
+  # === Parameters
+  # - term: the search term
+  #
+  # === Variables
+  # - @design_methods: all the design methods matching the term
+  # - @design_hash: correctly formatted json for jquery.
+  def autocomplete
+    @design_methods = DesignMethod.where(['name LIKE ?', "#{params[:term]}%"])
+    @design_hash = []
+    @design_methods.each do |d|
+      @design_hash << { label: d.name }
+    end
+    respond_to do |format|
+      format.json { render json: @design_hash}
+    end
+  end
+
+  # View details of a single DesignMethod.
+  #
+  # === Parameters
+  # - id: ID of design method
+  #
+  # === Variables
+  # - @design_method: design method corresponding to given ID
+  # - @categories: categories that this method falls under
   def show
     @design_method = DesignMethod.find(params[:id])
+    @categories = @design_method.method_categories
+    @back = redirect_back
 
     respond_to do |format|
       format.html # show.html.erb
@@ -33,26 +79,36 @@ class DesignMethodsController < ApplicationController
     end
   end
 
-  # GET /design_methods/new
-  # GET /design_methods/new.json
+  # Create a new DesignMethod
+  #
+  # === Variables
+  # - @design_method: initialized new DesignMethod object
   def new
     @design_method = DesignMethod.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @design_method }
-    end
   end
 
-  # GET /design_methods/1/edit
+  # Edit an existing DesignMethod
+  #
+  # === Parameters
+  # - id: ID of the design method to be edited
+  #
+  # === Variables
+  # - @design_method: the design method to be edited
   def edit
     @design_method = DesignMethod.find(params[:id])
   end
 
-  # POST /design_methods
-  # POST /design_methods.json
+
+  # Creates a DesignMethod
+  #
+  # === Request Body
+  # - design_method: a hash containing the required fields for creating a DesignMethod
+  #
+  # === Variables
+  # - @design_method: the newly created design method
   def create
-    @design_method = DesignMethod.new(params[:design_method])
+    @design_method = DesignMethod.new(design_method_params)
+    @design_method.owner = current_user
 
     respond_to do |format|
       if @design_method.save
@@ -65,8 +121,13 @@ class DesignMethodsController < ApplicationController
     end
   end
 
-  # PUT /design_methods/1
-  # PUT /design_methods/1.json
+  # Update an existing DesignMethod corresponding to the ID in the URI
+  #
+  # === Request Body
+  # - design_method: a hash containing information to update the DesignMethod with
+  #
+  # === Variables
+  # - @design_method: the updated design method
   def update
     @design_method = DesignMethod.find(params[:id])
 
@@ -81,15 +142,37 @@ class DesignMethodsController < ApplicationController
     end
   end
 
-  # DELETE /design_methods/1
-  # DELETE /design_methods/1.json
+  # Update an existing DesignMethod corresponding to the ID in the URI
+  #
+  # === Variables
+  # - design_method: the deleted design method
   def destroy
     @design_method = DesignMethod.find(params[:id])
     @design_method.destroy
 
     respond_to do |format|
-      format.html { redirect_to design_methods_url }
+      format.html { redirect_to redirect_back }
       format.json { head :no_content }
     end
   end
+
+  private
+
+    def design_method_params
+      params.require(:design_method).permit(
+        :name, :overview, :process, :principle
+      )
+    end
+
+    def redirect_back
+      if session[:return_to]
+        back = session[:return_to]
+        session.delete(:return_to)
+        back
+      else
+        design_methods_url
+      end
+    end
+
+  # end private
 end

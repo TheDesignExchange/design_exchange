@@ -1,10 +1,6 @@
-<%= form_tag "/search", method: "get" do %>
-  <%= label_tag :query, "Search for" %>
-  <%= text_field_tag :query %>
-  <%= submit_tag("Search") %>
-<% end %>
+<h1> Search results </h1>
 <ul>
-  <% @results.each do |result| %>
-    <%= render result %>
+  <% @hits.each do |hit| %>
+    <%= render 'design_methods/hit', hit: hit %>
   <% end %>
 </ul>

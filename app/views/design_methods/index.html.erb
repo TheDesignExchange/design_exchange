@@ -1,31 +1,6 @@
-<h1>Listing design_methods</h1>
+<h1>Design Methods</h1>
+<ul>
+  <%= render @design_methods %>
+</ul>
+<%= will_paginate @design_methods %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Overview</th>
-    <th>Process</th>
-    <th>Principle</th>
-    <th>Citation</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @design_methods.each do |design_method| %>
-  <tr>
-    <td><%= design_method.name %></td>
-    <td><%= design_method.overview %></td>
-    <td><%= design_method.process %></td>
-    <td><%= design_method.principle %></td>
-    <td><%= design_method.citation_id %></td>
-    <td><%= link_to 'Show', design_method %></td>
-    <td><%= link_to 'Edit', edit_design_method_path(design_method) %></td>
-    <td><%= link_to 'Destroy', design_method, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Design method', new_design_method_path %>

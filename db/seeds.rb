@@ -1,41 +1,88 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
-require "rubygems"
-require "net/http"
-require "uri"
-require "open-uri"
-require "csv"
-require "json"
 
+# Reset users
 
+User.destroy_all
 
-## LINK TO YIPU'S CASE STUDY GOOGLE SPREADSHEET
- # Initialize the client & Google+ API
-test = "https://spreadsheets.google.com/feeds/cells/0AojPWc7pGzlMdDNhSXd1MW8wSmxiSkt5LXJkZDZWNEE/od6/public/basic?alt=json-in-script&callback=?"
-cs_url = 'https://docs.google.com/spreadsheet/pub?key=0AjAwCuCEhsj_dHdiYW82LWJRR21mZU5aenRyRXVxa0E&single=true&gid=0&output=json'
-company_url = 'https://docs.google.com/spreadsheet/pub?key=0AjAwCuCEhsj_dHdiYW82LWJRR21mZU5aenRyRXVxa0E&single=true&gid=3&output=html'
+# Create default admin user
 
+admin = User.create!(
+  email: "admin@thedesignexchange.org",
+  password: "thedesignexchange",
+  password_confirmation: "thedesignexchange",
+)
 
-def getAPIdata(url)
-	url = URI(url.to_s)
+# Read in design methods from the spreadsheet
 
-	http = Net::HTTP.new(url.host, url.port) 
-	p url.request_uri 
-	http.use_ssl = true
-	http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+filename = File.join(Rails.root, 'lib/tasks/data/design_methods.xls')
+fields = Hash.new
 
-	request = Net::HTTP::Get.new url.request_uri  
+DesignMethod.destroy_all
 
-	res = http.request request
-	res = res.code == "200" ? res.body : ""#JSON.parse(res.body)['data'] : -1
-	p "GET: #{url.to_s}"
-	p res
-	return res
+data = Spreadsheet.open(filename).worksheet 0
+
+keys = {
+  analy: "Analyzing and Synthesizing Information",
+  build: "Building Prototypes and Mock-ups",
+  commu: "Communicating Within and Across Teams",
+  evalu: "Evaluating and Choosing",
+  gathe: "Gathering Information",
+  gener: "Generating Ideas and Concepts",
+}
+categories = Hash.new
+
+data.each do |row|
+  fields[:name]      = row[1].to_s.strip
+  fields[:overview]  = row[2].to_s.strip
+  fields[:process]   = row[3].to_s.strip
+  fields[:principle] = row[4].to_s.strip
+  # FILL: load citations from spreadsheet
+
+  design_method = DesignMethod.new(fields)
+  design_method.owner = admin
+
+  if !design_method.save
+    p "Error while creating a design method: "
+    design_method.errors.full_messages.each do |message|
+      p "\t#{message}"
+    end
+  else
+    p "Added #{design_method.name}"
+  end
+
+  # Read in categories
+
+  string = row[6]
+
+  if string and !string.include?('http') and !string.include?('pg')
+    string.downcase.split(/[\n,]/).each do |cat|  # split by new line character
+      if !cat.blank?
+        cat = cat.strip
+        keys.each do |key, title|
+          if cat.include?(key.to_s)
+            category = MethodCategory.where(name: title).first_or_create!
+            if !design_method.method_categories.include?(category)
+              design_method.method_categories << category
+            end
+            p "#{design_method.name}: #{design_method.method_categories.map {|c| c.name}}"
+          end
+        end
+      end
+    end
+  end
+
+  # citation = row[4]
+  # # not working: somehow the thing being updated in DB is method citations
+  # # and not citations.
+  # if citation #hard to determine what to filter or not.
+  #   citation.split(/[\n\*]/).each do |cit|
+  #     if !cit.blank?
+  #       design_method.citations << Citation.where(text: cit).first_or_create!
+  #       p "#{design_method.name}: #{design_method.citations.map {|c| c.text}}"
+  #     end
+  #   end
+  # end
 end
 
-getAPIdata(cs_url)
+header = DesignMethod.where(name: "Name").first
+header.destroy if header
+

@@ -9,7 +9,8 @@
 #
 
 class MethodCategory < ActiveRecord::Base
-  attr_accessible :name
+  validates :name, presence: true, length: { maximum: 255,
+            too_long: "%{count} is the maximum character length."}
 
   has_many :categorizations, dependent: :destroy
   has_many :design_methods, through: :categorizations

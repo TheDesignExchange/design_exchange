@@ -1,0 +1,56 @@
+// Place all the styles related to the main_pages controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.huge {
+  font-size: 130px;
+  font-family: sans-serif;
+}
+
+.home {
+  text-align: center;
+  background-color: #EEE;
+  padding: 20px;
+  margin: 0;
+}
+
+.column {
+  float: left;
+  color: #333;
+  border-right-style: solid;
+  border-right-width: 1px;
+  min-height: 100px;
+  margin-right: 20px;
+  max-width: 200px;
+}
+
+.column li {
+  padding: 10px 20px 10px 20px;
+  line-height: 1em;
+}
+
+.column li:hover {
+  background-color: #777;
+  color: #FFF;
+}
+
+.column li a {
+  text-decoration: none;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.recent {
+  float: left;
+  min-width: 70%;
+}
+
+.recent h2 {
+  margin-top: 0px;
+}
+
+.recent li {
+  border-bottom: none;
+  max-width: 60%;
+}
