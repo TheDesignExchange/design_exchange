@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819021258) do
+ActiveRecord::Schema.define(:version => 20131010222104) do
+
+  create_table "case_studies", :force => true do |t|
+    t.string   "company"
+    t.integer  "company_id"
+    t.string   "name"
+    t.string   "contact"
+    t.string   "contact_information"
+    t.string   "description"
+    t.string   "resources"
+    t.integer  "usability_rating"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
   create_table "categorizations", :force => true do |t|
     t.integer  "design_method_id"
@@ -24,6 +37,17 @@ ActiveRecord::Schema.define(:version => 20130819021258) do
   add_index "categorizations", ["design_method_id"], :name => "index_categorizations_on_design_method_id"
   add_index "categorizations", ["method_category_id"], :name => "index_categorizations_on_method_category_id"
 
+  create_table "citations", :force => true do |t|
+    t.integer  "method_citation_id"
+    t.integer  "design_method_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "citations", ["design_method_id", "method_citation_id"], :name => "cit_index", :unique => true
+  add_index "citations", ["design_method_id"], :name => "index_citations_on_design_method_id"
+  add_index "citations", ["method_citation_id"], :name => "index_citations_on_method_citation_id"
+
   create_table "design_methods", :force => true do |t|
     t.string   "name"
     t.text     "overview"
@@ -35,6 +59,12 @@ ActiveRecord::Schema.define(:version => 20130819021258) do
 
   create_table "method_categories", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "method_citations", :force => true do |t|
+    t.string   "text"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
