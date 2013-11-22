@@ -197,6 +197,7 @@ form.new_design_method {
   padding: 10px 20px 10px 20px;
   line-height: 1em;
 }
+
 /* Expanding Textarea */
 
 textarea {
@@ -219,4 +220,43 @@ textarea {
     padding: 5px;
     word-wrap: break-word;
     resize: none;
+}
+
+/* Columns */
+
+.twocolum {
+  margin:0px auto;
+}
+
+.sidecolumn {
+  float: left;
+  width: 18%;
+  color: #333;
+  border-right-style: solid;
+  border-right-width: 1px;
+  min-height: 100px;
+  margin-right: 20px;
+}
+
+.sidecolumn li {
+  padding: 10px 20px 10px 20px;
+  line-height: 1em;
+}
+
+.sidecolumn li:hover {
+  background-color: #777;
+  color: #FFF;
+}
+
+.sidecolumn li a {
+  text-decoration: none;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.maincolumn {
+  float: left;
+  margin: 0px;
+  width: 75%;
 }
