@@ -12,6 +12,7 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 gem 'spreadsheet'
+gem 'sqlite3'
 
 group :development do
   gem 'thin'
