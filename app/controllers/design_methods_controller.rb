@@ -39,6 +39,11 @@ class DesignMethodsController < ApplicationController
       store_location
       @hits = search.hits
     end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @hits }
+    end
   end
 
   # Provide design methods for autocomplete.
