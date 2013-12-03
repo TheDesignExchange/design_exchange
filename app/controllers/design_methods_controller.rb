@@ -38,11 +38,12 @@ class DesignMethodsController < ApplicationController
       end
       store_location
       @hits = search.hits
+      @results = search.results
     end
 
     respond_to do |format|
       format.html
-      format.json { render json: @hits }
+      format.json { render json: @results }
     end
   end
 
