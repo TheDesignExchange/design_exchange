@@ -34,6 +34,7 @@ class DesignMethodsController < ApplicationController
       search = DesignMethod.search do
         fulltext params[:query] do
           highlight
+          minimum_match 0
         end
       end
       store_location
