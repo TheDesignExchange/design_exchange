@@ -12,6 +12,7 @@ DesignExchange::Application.routes.draw do
   end
 
   resources :method_categories, only: [:show]
+  resources :citations, only: [:show]
   resources :users do
     resources :design_methods, only: [:index]
   end

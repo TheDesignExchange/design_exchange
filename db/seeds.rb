@@ -70,17 +70,18 @@ data.each do |row|
     end
   end
 
-  # citation = row[4]
-  # # not working: somehow the thing being updated in DB is method citations
-  # # and not citations.
-  # if citation #hard to determine what to filter or not.
-  #   citation.split(/[\n\*]/).each do |cit|
-  #     if !cit.blank?
-  #       design_method.citations << Citation.where(text: cit).first_or_create!
-  #       p "#{design_method.name}: #{design_method.citations.map {|c| c.text}}"
-  #     end
-  #   end
-  # end
+  citation = row[5]
+  if citation
+    citation.split(/[\n\*]/).each do |cit|
+      if !cit.blank?
+        to_add = Citation.where(text: cit).first_or_create!
+        if !design_method.citations.include?(to_add)
+          design_method.citations << to_add
+        end
+        p "#{design_method.name}: #{design_method.citations.map {|c| c.text}}"
+      end
+    end
+  end
 end
 
 header = DesignMethod.where(name: "Name").first

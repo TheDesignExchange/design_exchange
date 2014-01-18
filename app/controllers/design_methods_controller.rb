@@ -78,6 +78,7 @@ class DesignMethodsController < ApplicationController
   def show
     @design_method = DesignMethod.find(params[:id])
     @categories = @design_method.method_categories
+    @citations = @design_method.citations
     @back = redirect_back
 
     respond_to do |format|
