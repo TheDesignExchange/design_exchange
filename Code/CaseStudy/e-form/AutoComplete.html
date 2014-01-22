@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Autocomplete - Default functionality</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css" />
+  <script>
+  $(function() {
+    var availableTags = [
+      "Brainstorm",
+      "Framework",
+      "Action Learning",
+      "Action Planning",
+      "Action Research",
+      "Active Listening",
+      "Activity Analysis",
+      "Activity Modeling",
+      "Actors map",
+      "AEIOU",
+      "Affective Computing",
+      "Affinity Diagram",
+      "Appreciative Inquiry",
+      "Atomize",
+      "Attitude Questionnaire/Subjective Assessment",
+      "Attribute Listing",
+      "Autoethnography",
+      "Behavior Sampling",
+      "Behavioral Archaeology",
+      "Bifocal Display",
+      "Blogs",
+      "Blueprint",
+      "Bodystorming",
+      "Brainstorming",
+      "Brainwriting",
+      "Canonical Abstract Prototyping",
+      "CARD Sorting",
+      "CARD Technique",
+      "Character Profile",
+      "Checklists"
+
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  });
+  </script>
+</head>
+<body>
+ 
+<div class="ui-widget">
+  <label for="tags">Design Method: </label>
+  <input id="tags" />
+</div>
+ 
+ 
+</body>
+</html>
