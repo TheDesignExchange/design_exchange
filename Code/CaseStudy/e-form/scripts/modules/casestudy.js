@@ -31,12 +31,19 @@ var options = {
 
 var activeStudy;
 var casestudies = [];
-
+// CSid, infoNode, # of case studies that person person has to go through
 function CaseStudy(id, node, n){
   this.id = id;
   this.n = n;
+  
+
+  // var cs = new CaseStudy(1, info[1], 4)
+
   for(var prop in node)
     this[prop] = node[prop];
+
+  // cs.methods ---> ["User-centered design"]
+  // cs.domain ---> ["interaction design", "research"]
 }
 
 

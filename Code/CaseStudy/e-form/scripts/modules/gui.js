@@ -11,6 +11,7 @@ function GUI(cs){
 
   this.system = {
     "title" : $('p[name="title"'),
+    "author" : $('p[name="author"'),
     "description" : $('p[name="description"'),
     "methods" : $('ul[name="methods"')
   }
@@ -26,6 +27,8 @@ GUI.prototype.refresh = function(cs){
   this.loadCaseStudy(cs);
 }
 
+
+// Looks at a cs object and loads all the info onto the form
 GUI.prototype.loadCaseStudy = function(cs){
   this.addMetaData(cs);
   for(var prop in cs.characterization)
@@ -55,7 +58,7 @@ GUI.prototype.addMethod = function(method){
 
 
 
-
+// Generative GUI
 GUI.prototype.pagination = function(active, n){
     n += 2; // for traversing large n
 
@@ -78,6 +81,8 @@ GUI.prototype.pagination = function(active, n){
       paginationContainer.append(li.append(page));
     }
   }
+
+  // make dropdown buttons
   GUI.prototype.addCharacterization = function(type, values){
     var name = type.split('-');
     for(var i in name) name[i] = name[i].capitalize();
@@ -92,6 +97,7 @@ GUI.prototype.pagination = function(active, n){
 
     this.characterization.append(character);
   };
+
 GUI.prototype.addHandlers = function(){
   $("#adddetails").click(function(){
       var id = $(this).attr('name');
@@ -114,6 +120,10 @@ GUI.prototype.addHandlers = function(){
   // ENABLE CLICK FUNCTIONALITY ON PAGINATION
   $('a').click(function(){ window.location = $(this).attr('href');});
   $('li>a').unbind();
+
+
+  // USER INPUT BINDING
+
    $('.dropdown-menu li').click(function(){
       var prop = $(this).parent().attr('name');
       var value = $(this).children().html();
@@ -121,11 +131,13 @@ GUI.prototype.addHandlers = function(){
       activeStudy.characterization[prop] = value;
       gui.refresh(activeStudy);
     });
+
    this.user.title.bind('input propertychange', function() {
       var value = $(this).val();
       activeStudy.title = value;
       gui.refresh(activeStudy);
    });
+
     this.user.description.bind('input propertychange', function() {
       var value = $(this).val();
       activeStudy.description = value;
