@@ -3,6 +3,9 @@
 @import url("normalize.css");
 @import url("grid.css");
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:400,700,600");
+ul li{
+	color: #333;
+}
 textarea{
 	width: 100%;
 	padding: 15px 15px;

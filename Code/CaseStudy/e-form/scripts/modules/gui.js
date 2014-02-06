@@ -4,6 +4,7 @@ var gui;
 
 function GUI(cs){
   this.characterization = $('#btn-char');
+
   this.user = {
     "title" : $('textarea[name="title"'),
     "description" : $('textarea[name="description"')
@@ -17,8 +18,13 @@ function GUI(cs){
   }
   // ADD DYNAMIC ELEMENTS 
   this.pagination(cs.id, cs.n);
+
   for(var type in options.characterization)
     this.addCharacterization(type, options.characterization[type]);
+  
+  for(var i in cs.methods)
+    this.addMethod(cs.methods[i]);
+
   this.loadCaseStudy(cs);
   this.addHandlers();
 }
@@ -33,8 +39,7 @@ GUI.prototype.loadCaseStudy = function(cs){
   this.addMetaData(cs);
   for(var prop in cs.characterization)
     $($('td[name="' + prop + '"]').parent().children()[1]).html(cs.characterization[prop]);
-  for(var i in cs.methods)
-    this.addMethod(cs.methods[i]);
+  
 }
 
 
@@ -43,19 +48,32 @@ GUI.prototype.addMetaData = function(cs){
   this.user.title.val(cs.title);
   this.user.description.val(cs.description);
   this.system.description.html(cs.description);
+  this.system.methods.html('');
   for(var i in cs.methods){
     this.system.methods.append($("<li>"+ cs.methods[i] +"</li>"))
   }
 }
 
 GUI.prototype.addMethod = function(method){
-   var row = '<div class="row"><div class="col-sl-1"><div class="input-group"><span class="input-group-addon"><input type="checkbox"></span><input type="text" class="form-control" value="'+ method+'"></div><!-- /input-group --></div><!-- /.col-lg-6 --></div><br>';
+   var row = '<div class="col-sl-1"><div class="input-group"><span class="input-group-addon"><input checked type="checkbox"></span><input type="text" class="form-control" value="'+ method+'"></div></div>';
     $('#methods').append(row);
 
     var adddetails = '<button type="button" class="btn btn-default navbar-btn">Add Details</button>'; 
-    $('#adddetails').append(adddetails);
+    //$('#adddetails').append(adddetails);
 }
 
+// <div class="row">
+//   <div class="col-sl-1">
+//     <div class="input-group">
+//       <span class="input-group-addon">
+//         <input type="checkbox">
+//       </span>
+//         <input type="text" class="form-control" value="'+ method+'">
+//     </div>
+//     <!-- /input-group -->
+//   </div><!-- /.col-lg-6 -->
+//   </div>
+// <br>
 
 
 // Generative GUI
