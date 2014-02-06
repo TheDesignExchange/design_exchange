@@ -7,14 +7,18 @@ function GUI(cs){
 
   this.user = {
     "title" : $('textarea[name="title"'),
-    "description" : $('textarea[name="description"')
+    "description" : $('textarea[name="description"'),
+    "contactname" : $('textarea[name="contactname"'),
+
+   
   }
 
   this.system = {
     "title" : $('p[name="title"'),
-    "author" : $('p[name="author"'),
     "description" : $('p[name="description"'),
-    "methods" : $('ul[name="methods"')
+    "methods" : $('ul[name="methods"'),
+    "contactname" : $('p[name="contactname"'),
+   
   }
   // ADD DYNAMIC ELEMENTS 
   this.pagination(cs.id, cs.n);
@@ -48,7 +52,10 @@ GUI.prototype.addMetaData = function(cs){
   this.user.title.val(cs.title);
   this.user.description.val(cs.description);
   this.system.description.html(cs.description);
+
   this.system.methods.html('');
+  this.user.contactname.val(cs.contactname);
+  this.system.contactname.html(cs.contactname);
   for(var i in cs.methods){
     this.system.methods.append($("<li>"+ cs.methods[i] +"</li>"))
   }
@@ -108,6 +115,7 @@ GUI.prototype.pagination = function(active, n){
     var n = $('.btn-group').length;
     var character = $('<div class="grid_6 omega btn-group">  <button type="button" class="btn '+ colors[n] + ' dropdown-toggle" data-toggle="dropdown">'+ name +' <span class="caret"></span>  </button>  <ul name='+ type  +' class="dropdown-menu" role="menu"></ul></div>');
     var menu =  character.children('.dropdown-menu');
+    
     for(var i in values){
       var li = $("<li><a>" + values[i] + "</a></li>");
       menu.append(li);
@@ -161,4 +169,17 @@ GUI.prototype.addHandlers = function(){
       activeStudy.description = value;
       gui.refresh(activeStudy);
    });
+
+    this.user.contactname.bind('input propertychange', function() {
+      var value = $(this).val();
+      activeStudy.contactname = value;
+      gui.refresh(activeStudy);
+   });
+
+    $("p span").hide();
+    $("p").hover(function() {
+    $("span", this).show();
+  });
+
+
 }

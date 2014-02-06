@@ -34,7 +34,7 @@
 			<div class="grid_12 row">
 		        <div class="grid_6 system">
 		        	<h4>Title:</h4>
-		        	<p name="title"></p>
+		        	<p name='title'></p>
 		        </div>
 		        <div class="grid_6 omega user">
 		        	<h4>Title:</h4>
@@ -50,11 +50,20 @@
 						<tr><td name='design-cycle' class='char'> Design Cycle </td> <td> Conceptual Design </td> </tr>
 						<tr><td name='customer-type' class='char'> Customer Type </td> <td> Consumer </td> </tr>
 						<tr><td name='privacy-level' class='char'> Privacy Level </td> <td> Public </td> </tr>
+						<tr><td name='project-domain' class='char'> Project Domain </td> <td>  Built Environment </td> </tr>
+						<tr><td name="company-domain" class='char'> Company Domain </td> <td>  Education </td> </tr>
+
 					</table>
 				</div>
 				 <div class="grid_6 user omega">
 					<h4>Characterization:</h4>
 					<div class="grid_12" id="btn-char"></div>
+
+				<p>
+                    <img src="info.png" alt="Info" width="42" height="42">
+   					<span>This is the tooltip</span>
+				</p>	
+
 				</div>
 			</div>
 			
@@ -122,6 +131,60 @@
 
 					</div>
 				</div>
+
+             <!-- CONTACT INFO -->
+	        <div class="grid_12 row alpha">
+	        	<div class="grid_6 alpha system">
+					<h4>Contact Info:</h4>
+					<p name="contactname"> </p>
+					<p name="contactemail"> </p>
+					<p name="additionalcontactinfo"> </p>
+				</div>
+				<div class="grid_6 omega user">
+					<h4>Contact Info:</h4>
+					<div class="input-group">
+                        <span class="input-group-addon">Name</span>
+                        <input type="text" class="form-control" >
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">Email</span>
+                        <input type="text" class="form-control" >
+                    </div>
+                    <br>
+
+                    <div class="input-group">
+                        <span class="input-group-addon">Other</span>
+                        <input type="text" class="form-control" >
+                    </div>
+					
+				</div>
+			</div>  
+
+					<form action="">
+						<input type="checkbox" name="permission" value="doc_permit">Permission to use<br>
+					</form>
+
+					<br>
+
+
+                    <form action="upload_file.php" method="post"
+                    	enctype="multipart/form-data">
+						<label for="file">Upload File</label>
+						<input type="file" name="file" id="file"><br>
+						<input type="submit" name="submit" value="Submit">
+					</form>
+
+					<br>
+					<br>
+					<br>
+					<br>
+
+					
+
+
+
 		</div>
 	</div>
 </body>

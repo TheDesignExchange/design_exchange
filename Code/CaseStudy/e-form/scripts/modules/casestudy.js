@@ -13,11 +13,13 @@ var info = {
           "design-cycle": "Conceptual Design",
           "customer-type": "Consumer",
           "privacy-level": "Public",
+          "project-domain": "Built Environment",
+          "company-domain": "Education"
         }
       }, 
       "2":{"username": "Yipu", "description": "The mall.", "methods" : ["Brainstorm", "Ideate", "Interview"]},
       "3":{"username": "Cesar", "description": "Goats"},
-      "4":{"username": "S", "description" : 'Movies'}
+      "4":{"username": "S", "description" : "Movies"}
 }
 
 var options = {
@@ -25,7 +27,9 @@ var options = {
           "development-cycle": ["Product Update", "Product Refinement", "New Product", "None of these"],
           "design-cycle": ["Conceptual Design", "Problem Assessment", "Detailed design", "None of these"],
           "customer-type": ["Consumer", "Government", "Educational Group", "Business", "NGO", "None of these"],
-          "privacy-level": ["Private", "Public", "Both", "None of these"]
+          "privacy-level": ["Private", "Public", "Both", "None of these"],
+          "project-domain": ["Built Environment", "Product", "Service", "Web", "Mobile", "Graphic", "Fashion","Other"],
+          "company-domain":["Education", "Strategic Design", "User Research", "Product Design", "Interaction Design", "Qualitative Market Research", "Medical Device", "Social Media", "Branding & Packaging", "Other"]
     }
 }
 
