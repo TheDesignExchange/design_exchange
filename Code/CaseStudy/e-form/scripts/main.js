@@ -3,10 +3,7 @@ require.config({
 	paths : {
 	 "jquery" : "http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min",
 	 "bootstrap" : "bootstrap.min",
-	 // "stellar" : "jquery.stellar.min",
-	 "waypoints" : "waypoints.min",
-	 "easing" : "jquery.easing.1.3",
-	 "csvread" : "csvread",
+	 "jqueryCSV" : "jquery.csv",
 	 "basic" : "basic",
 	 "gui": "gui",
 	 "casestudy": "casestudy"
@@ -15,21 +12,38 @@ require.config({
 		"basic" : ["jquery"],
 		"casestudy" : ["jquery", "basic"],
 		"bootstrap" : ["jquery"],
-		"waypoints": ["jquery"],
-		"easing": ["jquery"],
-		// "stellar": ["stellar"],
+		"jqueryCSV" : ["jquery"],
 		"gui" : ["jquery", "basic"]
 	}
 });
 
-define(['jquery', 'bootstrap', 'easing', 'waypoints', 'basic', 'casestudy', 'gui', 'csvread'], function($, b, c, d, e, f, g) {
+define(['jquery', 'bootstrap', 'basic', 'casestudy', 'gui', 'jqueryCSV'], function($, b, c, d, e, f) {
 	$(function(){
 	  var id = parseInt(getURLParameters('cs'));
 	  for(var i in info)
 	    casestudies.push(new CaseStudy(i, info[i], Object.size(info)))
 	  
 	  activeStudy = casestudies[id-1];
-	  gui = new GUI(activeStudy);
-	  
+	  var caseStudyAtrributes = "https://docs.google.com/spreadsheet/pub?key=0AjAwCuCEhsj_dEZuM2ROU3VjUV9sTWs4TWZDTnotTkE&output=csv";
+	  $.get(caseStudyAtrributes, function(data){
+	  		var form = {};
+	  		var obj = $.csv.toObjects(data);
+	  		var id = 1;
+			for(var i in obj){
+				if(obj[i].processName in form){
+					if(activeStudy[obj[i].processName] == undefined)
+						activeStudy[obj[i].processName] = "";
+					form[obj[i].processName].options.push({"name": obj[i].optionName, "explanation": obj[i].explanation, "val": activeStudy[obj[i].processName] });
+				} else{
+					form[obj[i].processName] = {"id": parseInt(id), "name": obj[i].processName,  "sqlName": obj[i].sqlName, "type": obj[i].processType, "options" : [{"name": obj[i].optionName, "explanation": obj[i].explanation, "val": activeStudy[obj[i].sqlName]  }]};
+					id++;
+				}
+			}
+			var orderedForm = [];
+			for(var i in form){
+				orderedForm[form[i].id] = form[i];
+			}
+			gui = new GUI(activeStudy, orderedForm);
+	  });
 	});
 });

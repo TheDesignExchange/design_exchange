@@ -3,12 +3,21 @@
 @import url("normalize.css");
 @import url("grid.css");
 @import url("http://fonts.googleapis.com/css?family=Open+Sans:400,700,600");
+#form{
+	margin-top: 40px;
+}
+#form2{
+	margin-top: 60px;
+}
+
 ul li{
 	color: #333;
 }
 textarea{
 	width: 100%;
 	padding: 15px 15px;
+	height: 100%;
+	display: block;
 }
 .char-btn{
 	width: 100%;
@@ -32,14 +41,55 @@ table{
 	background: white;
 }
 /* FORM CSS */
-
+.grid_6.system{
+	padding: 0;
+	margin: 0;
+	min-height: 100%;
+	position: relative;
+}
 .system{
-	background: #ccc;
-	padding: 1% 2%;
+	padding: 10px;
+	border-right: #ccc solid 1px;
+	height: 100%;
+}
+.multiple .system, .multiple .user, .multiple p{
+	padding: 0px;
+	margin: 0px;
+}
+.multiple.row{
+	padding: 10px;
+}
+.user{
+	padding: 10px;
+
+}
+.half{
+	width: 50%;
+	float: left;
+}
+
+
+div.row h4{
+	display: block;
+	margin: 0;
+	padding: 3px 0 ;
+	-webkit-margin-before: 0em;
+	-webkit-margin-after: 0em;
 }
 div.row{
-	margin: -1% 0 0 0 !important;
+	width: 100%;
+	margin: 0 0 4px 0;
+	padding: 0;
 }
+.label{
+	display: inline-block;
+	color: black;
+	width: 60px;
+	position: relative;
+	left: 3px;
+	text-align: left;
+}
+
 /* Global */
 
 body {
@@ -79,13 +129,17 @@ a:visited {
 	position:fixed;
 	top:0px;
 	width:100%; 
-	height:auto; 
+	height:40px; 
 	background-color:#00A8E1;
 	z-index:100;
 }
 #logo {
 	text-align: center;
 	margin: 10px 0;
+	height: 100%;
+}
+#logo img{
+	height: 70%;
 }
 #nav {
 	text-align: right;
@@ -111,91 +165,6 @@ a:visited {
 	font-weight:bold;
 }
 
-
-
-
-/* General Slides */ 
-
-.slide{
-	background-attachment: fixed;
-	width:100%;
-	height:auto;
-	position: relative;
-	padding:100px 0;
-}
-
-
-
-
-
-
-
-
-/* Tablet */
-@media screen and (max-width: 1024px) {
-
-
-#logo {
-	width: 100%;
-	text-align: center;
-}
-
-#nav {
-	width:100%;
-	text-align:center;
-	margin:10px 0;
-}
-
-.navigation{
-	width: 100%;
-	float: center;
-	list-style: none;
-	margin: 0;
-	padding:0;
-}
-
-.navigation li{
-	float: left;
-	width:25%;
-	padding:0;
-}
-
-#content {
-	text-align:center;
-	width:100%;
-}
-
-
-
-/* Mobile */
-@media screen and (max-width: 480px) {
-
-#logo {
-	width: 100%;
-	text-align: center;
-}
-
-#nav {
-	width:100%;
-	margin:5px 0;
-}
-
-.navigation{
-	width: 100%;
-	float: left;
-	list-style: none;
-	margin: 0;
-	padding:0;
-}
-
-.navigation li{
-	float: left;
-	width:25%;
-}
-
-
-
-}
 
 
 
