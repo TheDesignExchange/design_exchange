@@ -23,26 +23,45 @@ define(['jquery', 'bootstrap', 'basic', 'casestudy', 'gui', 'jqueryCSV'], functi
 	  for(var i in info)
 	    casestudies.push(new CaseStudy(i, info[i], Object.size(info)))
 	  
-	  activeStudy = casestudies[id-1];
+	  var activeStudy = casestudies[id-1];
 	  var caseStudyAtrributes = "https://docs.google.com/spreadsheet/pub?key=0AjAwCuCEhsj_dEZuM2ROU3VjUV9sTWs4TWZDTnotTkE&output=csv";
+	  
 	  $.get(caseStudyAtrributes, function(data){
 	  		var form = {};
 	  		var obj = $.csv.toObjects(data);
-	  		var id = 1;
-			for(var i in obj){
-				if(obj[i].processName in form){
-					if(activeStudy[obj[i].processName] == undefined)
-						activeStudy[obj[i].processName] = "";
-					form[obj[i].processName].options.push({"name": obj[i].optionName, "explanation": obj[i].explanation, "val": activeStudy[obj[i].processName] });
+
+	  		// console.log(obj.length);
+	  		var j = 0;
+	  		$.each(obj, function(i, el){
+	  			var a = el.processName;
+	  			if(a in form){
+					if(activeStudy[a] == undefined) activeStudy[a] = "";
+					form[a].options.push({
+						id: j,
+						name: el.optionName, 
+						explanation: el.explanation, 
+						val: activeStudy[a] 
+					});
 				} else{
-					form[obj[i].processName] = {"id": parseInt(id), "name": obj[i].processName,  "sqlName": obj[i].sqlName, "type": obj[i].processType, "options" : [{"name": obj[i].optionName, "explanation": obj[i].explanation, "val": activeStudy[obj[i].sqlName]  }]};
-					id++;
+					form[a] = { 
+						id: j, 
+						name: a,
+						sqlName: el.sqlName, 
+						type: el.processType, 
+						options : [{ name: el.optionName, 
+							         explanation: el.explanation, 
+							         val: activeStudy[el.sqlName]  
+							     }]
+					};
+					j++;
 				}
-			}
+				
+	  		});
+			
 			var orderedForm = [];
-			for(var i in form){
+			for(var i in form)
 				orderedForm[form[i].id] = form[i];
-			}
+			
 			gui = new GUI(activeStudy, orderedForm);
 	  });
 	});
