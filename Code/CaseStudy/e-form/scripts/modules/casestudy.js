@@ -1,7 +1,8 @@
 
 var info = {
       "1": {
-        "authorName": "Aaron", 
+        "authorName": "Aaron Johnson",
+        "authorEmail": "aj@pers.eu",
         "title" : "A Case Study of Non-User-Centered Design for a Police Emergency-Response System", 
         "projectDomain": ["interaction design", "research"], 
         "url": "http://www.amanda.com/joomla_uploads/whitepapers/Intrxns.SJPD.Art.pp12ff.120906%282%29.pdf", 
@@ -13,7 +14,9 @@ var info = {
         "customerType": "Consumer",
         "privacyLevel": "Public",
         "projectDomain": "Built Environment",
-        "companyDomain": "Education"
+        "companyDomain": "Education", 
+        "mainImage": ["images/cs/cs1.png"], 
+        "time":{"days": 20} 
       }, 
       "2":{"username": "Yipu", "description": "The mall.", "methods" : ["Brainstorm", "Ideate", "Interview"]},
       "3":{"username": "Cesar", "description": "Goats"},

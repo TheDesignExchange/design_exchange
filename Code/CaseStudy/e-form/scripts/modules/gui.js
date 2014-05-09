@@ -70,14 +70,38 @@ GUI.prototype = {
                 id: el.name
               });
     var brk = GUI.dom('br');
-    var submit = GUI.dom("input").attr({
+
+    var upload = GUI.dom("input").attr({
                 type: "submit", 
-                name: el.name + "submit",
-                id: el.name + "submit", 
-                value: "Submit"
+                name: el.name + "upload",
+                id: el.name + "upload", 
+                value: "Upload"
               });
-    var fileContainer = GUI.dom('div').addClass('files').append([input, brk, submit]);
+
+    var fileContainer = GUI.dom('div').addClass('files').append([input, brk, upload]);
     var n = GUI.node(label, "", fileContainer );
+    this.form.append(n);
+  },
+  fileUploadImage : function(el){
+    console.log(el);
+    var image = GUI.dom('img').attr('src', el.options[0].val);
+    var label = GUI.label(el.name, el.name, true);
+    var input = GUI.dom("input").attr({
+                type: "file", 
+                name: el.name,
+                id: el.name
+              });
+    var brk = GUI.dom('br');
+
+    var upload = GUI.dom("input").attr({
+                type: "submit", 
+                name: el.name + "upload",
+                id: el.name + "upload", 
+                value: "Upload"
+              });
+
+    var fileContainer = GUI.dom('div').addClass('files').append([image]); //input, brk, upload]);
+    var n = GUI.node(label, image.clone(), fileContainer );
     this.form.append(n);
   },
   time : function(el){
@@ -105,17 +129,26 @@ GUI.prototype = {
   dropDown : function(el){
     var header = GUI.label(el.name, el.name, true);
     var container = GUI.dom("div").addClass('multiple row');
+    var dropdown = GUI.dom("ul").addClass('menu');
+    var mainli = GUI.dom("li");
+    var label = GUI.dom("a").attr('href', '#').html(el.name);
+    var list = GUI.dom("ul");
+
+
+    var selected = GUI.dom("p");
      for(var i in el.options){
       var option = el.options[i];
-      var label = GUI.label(option.name, option['sqlName']);
-      var value = GUI.dom("span");
-      if(option.val) value.html(option.val);
-      
-
-      var n = GUI.node(label, value, "");
-      container.append(n);
+      var li = GUI.dom("li");
+      var a = GUI.dom("a").html(option.name).data(option);
+      if(option.val != "") selected.html(option.name).data(option);
+      list.append(li.append(a));
+      console.log(option);
     }   
+    dropdown.append(mainli.append(label).append(list)).dropit();
+
+
     container.children(".row:first").children(".half").prepend(header); 
+    container.append(GUI.node(el.name, selected, dropdown, false));
     this.form.append(container);
     console.log(el);
   }
@@ -123,12 +156,19 @@ GUI.prototype = {
 
 
 GUI.node = function(label, valA, valB, invert){
-  if(invert)
-    return GUI.column([valA, label], [valB, label.clone()]);
+  console.log(label, valA, valB, invert);
+    if(typeof label === 'string')
+    var l = GUI.dom("p").html(label).addClass('label');
   else
-    return GUI.column([label, valA], [label.clone(), valB]);
+    l = label;
+  if(invert)
+    return GUI.column([valA, l], [valB, l.clone().addClass('label-right')]);
+  else
+    return GUI.column([l, valA], [l.clone(), valB]);
 }
+
 GUI.dom = function(tag){ return $("<" + tag + "></" + tag + ">");}
+
 GUI.label = function(label, sqlName, isFull){
   var a = GUI.dom("p").attr("name", sqlName).addClass('label').html(label);
   return isFull ? a.addClass('full-label') : a;
@@ -142,7 +182,6 @@ GUI.column = function(l, r){
   return row.append([left, right, brk]);
 }
 
-  
 GUI.dd = function(type, values){
 
   list = GUI.dom("ul").addClass('name', type);

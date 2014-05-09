@@ -6,18 +6,20 @@ require.config({
 	 "jqueryCSV" : "jquery.csv",
 	 "basic" : "basic",
 	 "gui": "gui",
-	 "casestudy": "casestudy"
+	 "casestudy": "casestudy", 
+	 "dropit": "dropit"
 	}, 
 	shim:{
 		"basic" : ["jquery"],
 		"casestudy" : ["jquery", "basic"],
 		"bootstrap" : ["jquery"],
 		"jqueryCSV" : ["jquery"],
-		"gui" : ["jquery", "basic"]
+		"gui" : ["jquery", "basic"],
+		"dropit": ["jquery"]
 	}
 });
 
-define(['jquery', 'bootstrap', 'basic', 'casestudy', 'gui', 'jqueryCSV'], function($, b, c, d, e, f) {
+define(['jquery', 'bootstrap', 'basic', 'casestudy', 'gui', 'jqueryCSV', 'dropit'], function($, b, c, d, e, f, g) {
 	$(function(){
 	  var id = parseInt(getURLParameters('cs'));
 	  for(var i in info)
