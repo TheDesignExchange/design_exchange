@@ -1,185 +1,194 @@
+GUI.colors = ['btn-success', 'btn-info', 'btn-warning', 'btn-primary'];
 
-var colors = ['btn-success', 'btn-info', 'btn-warning', 'btn-primary'];
-var gui;
-
-function GUI(cs){
-  this.characterization = $('#btn-char');
-
-  this.user = {
-    "title" : $('textarea[name="title"'),
-    "description" : $('textarea[name="description"'),
-    "contactname" : $('textarea[name="contactname"'),
-
-   
-  }
-
-  this.system = {
-    "title" : $('p[name="title"'),
-    "description" : $('p[name="description"'),
-    "methods" : $('ul[name="methods"'),
-    "contactname" : $('p[name="contactname"'),
-   
-  }
-  // ADD DYNAMIC ELEMENTS 
-  this.pagination(cs.id, cs.n);
-
-  for(var type in options.characterization)
-    this.addCharacterization(type, options.characterization[type]);
-  
-  for(var i in cs.methods)
-    this.addMethod(cs.methods[i]);
-
-  this.loadCaseStudy(cs);
-  this.addHandlers();
+function GUI(cs, data){
+  this.form = $('#form2 .container');
+  this.data = data;
+  this._init();
 }
 
-GUI.prototype.refresh = function(cs){
-  this.loadCaseStudy(cs);
-}
-
-
-// Looks at a cs object and loads all the info onto the form
-GUI.prototype.loadCaseStudy = function(cs){
-  this.addMetaData(cs);
-  for(var prop in cs.characterization)
-    $($('td[name="' + prop + '"]').parent().children()[1]).html(cs.characterization[prop]);
-  
-}
-
-
-GUI.prototype.addMetaData = function(cs){
-  this.system.title.html(cs.title);
-  this.user.title.val(cs.title);
-  this.user.description.val(cs.description);
-  this.system.description.html(cs.description);
-
-  this.system.methods.html('');
-  this.user.contactname.val(cs.contactname);
-  this.system.contactname.html(cs.contactname);
-  for(var i in cs.methods){
-    this.system.methods.append($("<li>"+ cs.methods[i] +"</li>"))
-  }
-}
-
-GUI.prototype.addMethod = function(method){
-   var row = '<div class="col-sl-1"><div class="input-group"><span class="input-group-addon"><input checked type="checkbox"></span><input type="text" class="form-control" value="'+ method+'"></div></div>';
-    $('#methods').append(row);
-
-    var adddetails = '<button type="button" class="btn btn-default navbar-btn">Add Details</button>'; 
-    //$('#adddetails').append(adddetails);
-}
-
-// <div class="row">
-//   <div class="col-sl-1">
-//     <div class="input-group">
-//       <span class="input-group-addon">
-//         <input type="checkbox">
-//       </span>
-//         <input type="text" class="form-control" value="'+ method+'">
-//     </div>
-//     <!-- /input-group -->
-//   </div><!-- /.col-lg-6 -->
-//   </div>
-// <br>
-
-
-// Generative GUI
-GUI.prototype.pagination = function(active, n){
-    n += 2; // for traversing large n
-
-    var paginationContainer = $('.pagination');
-    for(var i = 0; i < n; i ++){
-       var li = $('<li></li>');
-      var page = $('<a></a>');
-      if(i == 0)
-        page.attr('href', "").html('&laquo;');
-      else if(i == n - 1)
-        page.attr('href', "").html('&raquo;');
-      else
-        page.attr('href', "index.html?cs=" + i).html(i);
-
-      if(i == active){
-        page.html(i + '<span class="sr-only">(current)</span>');
-        li.addClass('active');
-      }
-      
-      paginationContainer.append(li.append(page));
-    }
-  }
-
-  // make dropdown buttons
-  GUI.prototype.addCharacterization = function(type, values){
-    var name = type.split('-');
-    for(var i in name) name[i] = name[i].capitalize();
-    name = name.join(" ")
-    var n = $('.btn-group').length;
-    var character = $('<div class="grid_6 omega btn-group">  <button type="button" class="btn '+ colors[n] + ' dropdown-toggle" data-toggle="dropdown">'+ name +' <span class="caret"></span>  </button>  <ul name='+ type  +' class="dropdown-menu" role="menu"></ul></div>');
-    var menu =  character.children('.dropdown-menu');
+GUI.prototype = {
+  _init: function(){
+    var that = this;
+    $.each(this.data, function(i, el){
+        if(typeof el !== 'undefined')
+          that[el.type](el);
+    });
+  },
+  textInput: function(el){
+    var header = GUI.dom('p').html(el.name).addClass('label').addClass('full-label');
+    var container = GUI.dom("div").addClass('multiple row');//.append(header);
     
-    for(var i in values){
-      var li = $("<li><a>" + values[i] + "</a></li>");
-      menu.append(li);
+    for(var i in el.options){
+      var option = el.options[i];
+      var label = GUI.label(option.name, option['sqlName']);
+      var value = GUI.dom("span");
+      if(option.val) value.html(option.val);
+     
+      var input = GUI.dom('input').attr('name', option['sqlName'])    
+                                  .attr('value', option['val']);     
+     
+      var n = GUI.node(label, value, input);
+      container.append(n);
     }
+    container.children(".row:first").children(".half").prepend(header);
+    this.form.append(container);
+  }, 
+  textArea: function(el){
+    var label = GUI.label(el.name, el.name, true);
+    var value = GUI.dom("p").attr('name', el['sqlName']).html(el.options[0]['val']);
+    var a = [label, value];
+    var value2 = GUI.dom('textarea').attr('rows', 4).attr('name', el['sqlName']).html(el.options[0]['val']);
+    var b = [label.clone(), value2];
+    var input = GUI.column(a, b);
+    this.form.append(input);
+  },
+  webInput : function(el){
+    var label = GUI.label(el.name, el.name, true);
+    var value = GUI.dom("a").attr({
+                              name : el['sqlName'],
+                              target: "blank",
+                              href: el.options[0]['val'] 
+                            }).html('Link');
+   
+    var value2 = GUI.dom('input').attr('name', el['sqlName']).val(el.options[0]['val']);
+   
+    var input = GUI.node(label, value, value2);
+    this.form.append(input);
+  },
+  checkbox : function(el){
+    console.log(el);
+  },
+  checkboxConfirm : function(el){
+    // console.log(el);
+  },
+  fileUpload : function(el){
+    console.log(el);
+    var label = GUI.label(el.name, el.name, true);
+    var input = GUI.dom("input").attr({
+                type: "file", 
+                name: el.name,
+                id: el.name
+              });
+    var brk = GUI.dom('br');
 
-    this.characterization.append(character);
-  };
+    var upload = GUI.dom("input").attr({
+                type: "submit", 
+                name: el.name + "upload",
+                id: el.name + "upload", 
+                value: "Upload"
+              });
 
-GUI.prototype.addHandlers = function(){
-  $("#adddetails").click(function(){
-      var id = $(this).attr('name');
-      if ($(this).hasClass("remove")){
-        //SHOW SUB
-        $(this).html("Add Details").removeClass("remove");
-        $("#sub").show();
-        $("#submethod-text").html(id);
-      }else{
-        //HIDE SUB
-        $(this).html("Remove Details").addClass("remove");
-        $("#sub").hide();
-      }
-    });
+    var fileContainer = GUI.dom('div').addClass('files').append([input, brk, upload]);
+    var n = GUI.node(label, "", fileContainer );
+    this.form.append(n);
+  },
+  fileUploadImage : function(el){
+    console.log(el);
+    var image = GUI.dom('img').attr('src', el.options[0].val);
+    var label = GUI.label(el.name, el.name, true);
+    var input = GUI.dom("input").attr({
+                type: "file", 
+                name: el.name,
+                id: el.name
+              });
+    var brk = GUI.dom('br');
 
-    $("#Hdetail1").click(function(){
-      $("#sub").show();
-    });
+    var upload = GUI.dom("input").attr({
+                type: "submit", 
+                name: el.name + "upload",
+                id: el.name + "upload", 
+                value: "Upload"
+              });
 
-  // ENABLE CLICK FUNCTIONALITY ON PAGINATION
-  $('a').click(function(){ window.location = $(this).attr('href');});
-  $('li>a').unbind();
+    var fileContainer = GUI.dom('div').addClass('files').append([image]); //input, brk, upload]);
+    var n = GUI.node(label, image.clone(), fileContainer );
+    this.form.append(n);
+  },
+  time : function(el){
+    var header = GUI.label(el.name, el.name, true);
+    var container = GUI.dom("div").addClass('multiple row');//.append(header);
+    
+    for(var i in el.options){
+      var option = el.options[i];
+      var label = GUI.label(option.name, option['sqlName']).addClass('time');
+      var value = GUI.dom("span").addClass('time');
+      if(option.val) value.html(option.val);
+     
+      var input = GUI.dom('input').attr('name', option['sqlName'])    
+                                  .attr('value', option['val'])
+                                  .addClass('time');     
+     
+      var n = GUI.node(label, value, input, true);
+      container.append(n);
+    }
+    container.children(".row:first").children(".half").prepend(header);
+    this.form.append(container);
+    // console.log(el);
+  },
+  checkbox : function(el){},
+  dropDown : function(el){
+    var header = GUI.label(el.name, el.name, true);
+    var container = GUI.dom("div").addClass('multiple row');
+    var dropdown = GUI.dom("ul").addClass('menu');
+    var mainli = GUI.dom("li");
+    var label = GUI.dom("a").attr('href', '#').html(el.name);
+    var list = GUI.dom("ul");
 
 
-  // USER INPUT BINDING
+    var selected = GUI.dom("p");
+     for(var i in el.options){
+      var option = el.options[i];
+      var li = GUI.dom("li");
+      var a = GUI.dom("a").html(option.name).data(option);
+      if(option.val != "") selected.html(option.name).data(option);
+      list.append(li.append(a));
+      console.log(option);
+    }   
+    dropdown.append(mainli.append(label).append(list)).dropit();
 
-   $('.dropdown-menu li').click(function(){
-      var prop = $(this).parent().attr('name');
-      var value = $(this).children().html();
-      console.log(prop, value);
-      activeStudy.characterization[prop] = value;
-      gui.refresh(activeStudy);
-    });
 
-   this.user.title.bind('input propertychange', function() {
-      var value = $(this).val();
-      activeStudy.title = value;
-      gui.refresh(activeStudy);
-   });
+    container.children(".row:first").children(".half").prepend(header); 
+    container.append(GUI.node(el.name, selected, dropdown, false));
+    this.form.append(container);
+    console.log(el);
+  }
+}
 
-    this.user.description.bind('input propertychange', function() {
-      var value = $(this).val();
-      activeStudy.description = value;
-      gui.refresh(activeStudy);
-   });
 
-    this.user.contactname.bind('input propertychange', function() {
-      var value = $(this).val();
-      activeStudy.contactname = value;
-      gui.refresh(activeStudy);
-   });
+GUI.node = function(label, valA, valB, invert){
+  console.log(label, valA, valB, invert);
+    if(typeof label === 'string')
+    var l = GUI.dom("p").html(label).addClass('label');
+  else
+    l = label;
+  if(invert)
+    return GUI.column([valA, l], [valB, l.clone().addClass('label-right')]);
+  else
+    return GUI.column([l, valA], [l.clone(), valB]);
+}
 
-    $("p span").hide();
-    $("p").hover(function() {
-    $("span", this).show();
+GUI.dom = function(tag){ return $("<" + tag + "></" + tag + ">");}
+
+GUI.label = function(label, sqlName, isFull){
+  var a = GUI.dom("p").attr("name", sqlName).addClass('label').html(label);
+  return isFull ? a.addClass('full-label') : a;
+}
+/* Separates a and b into a column */
+GUI.column = function(l, r){
+  var row = GUI.dom('div').addClass('row');
+  var left = GUI.dom('div').addClass('half system').append(l);
+  var right = GUI.dom('div').addClass('half omega user').append(r);
+  var brk = GUI.dom('br').addClass('clearfix');
+  return row.append([left, right, brk]);
+}
+
+GUI.dd = function(type, values){
+
+  list = GUI.dom("ul").addClass('name', type);
+  
+  var lis = $.map(values, function(el, i){
+    return GUI.dom('li').append(GUI.dom('a').html(el)).attr('name', el);
   });
 
-
+  return list.append(lis);
 }
