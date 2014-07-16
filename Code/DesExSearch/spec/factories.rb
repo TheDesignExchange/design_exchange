@@ -20,10 +20,15 @@ FactoryGirl.define do
   end
 
   factory :design_method do
-    name      { Faker::Lorem.word }
-    overview  { Faker::Lorem.paragraph }
-    process   { Faker::Lorem.paragraph }
-    principle { Faker::Lorem.paragraph }
+    name              { Faker::Lorem.word }
+    overview          { Faker::Lorem.paragraph }
+    process           { Faker::Lorem.paragraph }
+    principle         { Faker::Lorem.paragraph }
+    num_of_designers  { rand(1...10) }
+    num_of_users      { rand(1...10) }
+    time_period       { rand(1...100) }
+    time_unit         { Faker::Lorem.word }
+    main_image        { Faker::Internet.url }
     owner
   end
 

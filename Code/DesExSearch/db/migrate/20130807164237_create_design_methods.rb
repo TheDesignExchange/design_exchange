@@ -9,6 +9,12 @@ class CreateDesignMethods < ActiveRecord::Migration
       t.integer :owner_id, null: false
       t.integer :parent_id
 
+      t.integer :num_of_designers
+      t.integer :num_of_users
+      t.integer :time_period
+      t.string  :time_unit
+      t.string  :main_image
+
       t.timestamps
     end
   end

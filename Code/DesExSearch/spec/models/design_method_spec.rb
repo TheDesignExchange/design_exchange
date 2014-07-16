@@ -32,6 +32,13 @@ describe DesignMethod do
   it { should respond_to(:owner) }
   it { should respond_to(:favorited_users) }
 
+  it { should respond_to(:num_of_designers) }
+  it { should respond_to(:num_of_users) }
+  it { should respond_to(:time_period) }
+  it { should respond_to(:time_unit) }
+  it { should respond_to(:main_image) }
+  it { should respond_to(:tools) }
+
   it { should be_valid }
 
   describe "when name is not present" do
