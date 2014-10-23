@@ -5,7 +5,7 @@
       <h5 class='truncate'>
         <%= link_to "#{@thumb_obj[:name]}", eval("#{@thumb_obj[:link]}_path(#{@thumb_obj[:id]})") %> 
       </h5>
-      <p><span class="glyphicon glyphicon-star"></span> <%= "#{@thumb_obj[:likes]}" %> Likes</p>
+      <p><span class="glyphicon glyphicon-star"></span> <% "#{@thumb_obj[:likes]}" %><%= rand(100)%> Likes</p>
       <p class='truncate-multiline'>
         <%= "#{@thumb_obj[:description][0..300]}" %>
         <%= link_to "[...]", eval("#{@thumb_obj[:link]}_path(#{@thumb_obj[:id]})") %>

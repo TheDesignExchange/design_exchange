@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
   	def index
     	# @design_methods = DesignMethod.where("overview != ?", "No overview available" ).take(3)
     	# @case_studies = CaseStudy.where("description != ?", "No description available").take(3)
-      @design_methods = DesignMethod.take(3)
+      @design_methods = DesignMethod.where("overview != ?", "No overview available" ).take(3)
       @case_studies = CaseStudy.take(3)
       @discussions = Discussion.take(2)
     	# render :text => sidebar_hash(:methods)

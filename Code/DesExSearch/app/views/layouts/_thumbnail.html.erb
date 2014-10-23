@@ -12,7 +12,7 @@
       <% end  %>
       <p class="likes">
         <span class="glyphicon glyphicon-star"></span> 
-        <%= "#{@thumb_obj[:likes]}" %> Likes
+        <% "#{@thumb_obj[:likes]}" %>  <% "#{@thumb_obj[:likes]}" %><%= rand(100)%> Likes
       </p>
   		<p class="truncate-multiline"> 
         <%= "#{@thumb_obj[:description][0..@thumb_obj[:word_count]]}" %>
