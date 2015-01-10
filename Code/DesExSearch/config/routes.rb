@@ -39,6 +39,7 @@ DesignExchange::Application.routes.draw do
     collection do
       get "search/:query", to: "application#search", :as => "search"
       get "search", to: "application#search"
+      get "test"
     end
   end
 
