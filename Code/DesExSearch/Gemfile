@@ -20,10 +20,10 @@ gem 'rdf-raptor'
 gem 'sparql'
 gem 'equivalent-xml'
 gem 'ffi'
-
+gem 'rb-gsl'
 
 # LSA
-gem  'gsl', '~> 1.15.3'
+gem  'gsl', '~> 1.14'
 gem 'similarity', '~> 0.2.5'
 
 
